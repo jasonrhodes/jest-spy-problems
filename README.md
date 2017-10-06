@@ -2,6 +2,15 @@ This is a small repo meant to show some issues with jest, ES6 imports, and mocki
 
 In `src/main.js` I have a very simple set up where a memoized function (using _.memoize) checks for that the items in one array (`subset`) are also totally contained in a second array (`set`) using `_.difference`.
 
+**You can run this locally to see the test failures:**
+```sh
+$ git clone git@github.com:jasonrhodes/jest-spy-problems.git
+$ cd jest-spy-problems
+$ yarn install
+$ yarn test
+```
+or use `npm install` and `npm test`
+
 ## Problem
 
 A simple JS file:
