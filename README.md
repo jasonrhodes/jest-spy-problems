@@ -51,19 +51,19 @@ If you mock lodash entirely, `_.memoize` returns undefined and breaks the test, 
 
 ### Spying on _.difference
 
-See: `src/main.test.js`
+See: [`src/main.test.js`](src/main.test.js)
 
 If you try to spy on `_.difference` using `jest.spyOn()`, it doesn't work. I think this one breaks because `babel-plugin-lodash` is running and converts the import to reference something else, so the spy doesn't reference the right thing.
 
 ### Import * trick
 
-See: [src/main_import-star.test.js](src/main_import-star.test.js)
+See: [`src/main_import-star.test.js`](src/main_import-star.test.js)
 
 This is a trick I've used with jest where it gives you a better reference to imported functions so you can stub and mock them better. Doesn't work here, probably for the same reason as above re: `babel-plugin-lodash`.
 
 ### Mocking `lodash/difference`
 
-See: `src/main_mock.test.js`
+See: [`src/main_mock.test.js`](src/main_mock.test.js)
 
 OK this actually works for the check on memoization. It reads in the right reference for `babel-plugin-lodash` and lets you only mock that one function, and you can have it return an empty array so that things generally work, and then verify it was only called once to verify memoization is happening.
 
