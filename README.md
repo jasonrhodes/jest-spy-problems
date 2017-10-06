@@ -2,6 +2,49 @@ This is a small repo meant to show some issues with jest, ES6 imports, and mocki
 
 In `src/main.js` I have a very simple set up where a memoized function (using _.memoize) checks for that the items in one array (`subset`) are also totally contained in a second array (`set`) using `_.difference`.
 
+## Problem
+
+A simple JS file:
+```js
+import _ from 'lodash'
+
+function checkDifference(subset, set) {
+  return _.difference(subset, set).length === 0
+}
+
+const memoized = _.memoize(
+  checkDifference,
+  (subset, set) => subset.join('') + '::' + set.join('')
+)
+
+export default function diff(subset, set) {
+  return memoized(subset, set)
+}
+```
+
+And a simple test that the boolean logic works and that memoization is happening correctly:
+```js
+const set = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+
+it('should return true if ALL values are in the set', () => {
+  expect(main['a', 'c'], set).toEqual(true)
+})
+
+it('should return false if ANY value is not in the set', () => {
+  expect(main(['a', 'c', 'z'], set)).toEqual(false)
+})
+
+it('should only call the memoized function once', () => {
+  main(['a'], set)
+  main(['a'], set)
+  main(['a'], set)
+
+  expect(_.difference).toHaveBeenCalledTimes(1) // <--- this expect is the big problem
+})
+```
+
+## Failed Solutions
+
 ### Mocking lodash
 
 If you mock lodash entirely, `_.memoize` returns undefined and breaks the test, unless you completely rebuild the functionality of memoize in a stub. Not a good idea.
