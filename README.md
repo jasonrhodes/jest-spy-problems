@@ -57,7 +57,7 @@ If you try to spy on `_.difference` using `jest.spyOn()`, it doesn't work. I thi
 
 ### Import * trick
 
-See: `src/main_import-star.test.js`
+See: [src/main_import-star.test.js](src/main_import-star.test.js)
 
 This is a trick I've used with jest where it gives you a better reference to imported functions so you can stub and mock them better. Doesn't work here, probably for the same reason as above re: `babel-plugin-lodash`.
 
